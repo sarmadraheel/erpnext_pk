@@ -32,12 +32,16 @@ The Pakistan Workspace is a localization app for [ERPNext](https://github.com/fr
 <img src="https://raw.githubusercontent.com/ParaLogicTech/erpnext_pk/master/erpnext_pk/public/images/erpnext-pk-screenshot.png">
 
 ## Installation 🧑‍💻
-The Pakistan Workspace can be installed via Bench CLI on an active ERPNext site. 
+The Pakistan Workspace can be installed via Bench CLI on an active ERPNext site.
+This branch targets **ERPNext / Frappe v16** (Python 3.14, Node 24).
 
-```python
-bench get-app https://github.com/ParaLogicTech/erpnext_pk.git
+```bash
+bench get-app https://github.com/ParaLogicTech/erpnext_pk.git --branch v16-compat
 bench --site [site name] install-app erpnext_pk
 ```
+
+For an existing site, run `bench --site [site name] migrate` after updating the app so that the v16 custom field
+layout, workspace, sidebar and dock are applied.
 
 ## Roadmap & Wishlist ✨
 - Print formats to include NIC, NTN and/or STRN numbers

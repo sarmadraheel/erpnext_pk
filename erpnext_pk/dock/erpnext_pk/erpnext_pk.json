@@ -1,0 +1,23 @@
+{
+ "app": "erpnext_pk",
+ "creation": "2026-10-11 02:30:00.000000",
+ "docstatus": 0,
+ "doctype": "Dock",
+ "idx": 0,
+ "items": [
+  {
+   "added": 0,
+   "hidden": 0,
+   "icon": "crescent-star",
+   "link_to": "Pakistan",
+   "link_type": "Sidebar",
+   "title": "Pakistan"
+  }
+ ],
+ "modified": "2026-10-11 02:30:00.000000",
+ "modified_by": "Administrator",
+ "name": "erpnext_pk",
+ "owner": "Administrator",
+ "standard": 1,
+ "user": ""
+}

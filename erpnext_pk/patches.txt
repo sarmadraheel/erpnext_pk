@@ -1,1 +1,5 @@
+[pre_model_sync]
 erpnext_pk.patches.reset_custom_fields
+
+[post_model_sync]
+erpnext_pk.patches.v16.update_custom_fields

@@ -48,7 +48,7 @@ custom_fields = {
 	],
 
 	'Supplier': [
-		get_template_field({"fieldname": 'tax_nic', 'insert_after': 'pan'}),
+		get_template_field({"fieldname": 'tax_nic', 'insert_after': 'tax_id'}),
 		get_template_field({"fieldname": 'tax_ntn', 'insert_after': 'tax_nic'}),
 		get_template_field({"fieldname": 'tax_strn', 'insert_after': 'tax_ntn'})
 	],
