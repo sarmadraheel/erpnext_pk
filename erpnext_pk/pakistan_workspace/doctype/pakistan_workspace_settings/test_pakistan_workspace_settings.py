@@ -1,8 +1,8 @@
 # Copyright (c) 2022, ParaLogic and Contributors
 # See license.txt
 
-# import frappe
-import unittest
+from frappe.tests import IntegrationTestCase
 
-class TestPakistanWorkspaceSettings(unittest.TestCase):
+
+class TestPakistanWorkspaceSettings(IntegrationTestCase):
 	pass

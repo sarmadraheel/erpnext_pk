@@ -3,7 +3,7 @@
 
 import frappe
 from frappe import _
-from frappe.utils import getdate, today, flt
+from frappe.utils import getdate, today, flt, formatdate
 
 
 def execute(filters=None):
@@ -13,9 +13,9 @@ def execute(filters=None):
 class FBRSalesTaxReport:
 	def __init__(self, filters=None):
 		self.filters = frappe._dict(filters or dict())
-		self.filters.from_date = getdate(filters.from_date or today())
-		self.filters.to_date = getdate(filters.to_date or today())
-		self.filters.company = filters.company or frappe.db.get_single_value('Global Defaults', 'default_company')
+		self.filters.from_date = getdate(self.filters.from_date or today())
+		self.filters.to_date = getdate(self.filters.to_date or today())
+		self.filters.company = self.filters.company or frappe.db.get_single_value('Global Defaults', 'default_company')
 
 		self.filters.sales_tax_account = frappe.get_cached_value('Company', self.filters.company, "sales_tax_account")
 		self.filters.further_tax_account = frappe.get_cached_value('Company', self.filters.company, "further_tax_account")
@@ -26,10 +26,10 @@ class FBRSalesTaxReport:
 			self.filters.further_tax_account,
 			self.filters.extra_tax_account,
 		]
-		self.filters.tax_accounts = [d for d in self.filters.tax_accounts if d]
+		self.filters.tax_accounts = tuple(d for d in self.filters.tax_accounts if d)
 
 		if not self.filters.sales_tax_account:
-			frappe.throw(_("Please set Sales Tax Account in Company {0}".format(self.filters.company)))
+			frappe.throw(_("Please set Sales Tax Account in Company {0}").format(self.filters.company))
 
 		if self.filters.from_date > self.filters.to_date:
 			frappe.throw(_("Date Range is incorrect"))
@@ -44,33 +44,31 @@ class FBRSalesTaxReport:
 		condition = "AND si.customer = %(customer)s" if self.filters.customer else ""
 
 		invoices = frappe.db.sql("""
-			SELECT si.name, si.customer, si.base_net_total,
+			SELECT si.name, si.customer, si.base_net_total, si.posting_date,
 				si.tax_nic, si.tax_ntn, si.tax_strn,
-				address_customer.state as destination_province,
-				address_company.state as supplier_province,
-				DATE_FORMAT(si.posting_date, '%%d/%%m/%%Y') as posting_date
+				address_customer.state AS destination_province,
+				address_company.state AS supplier_province
 			FROM `tabSales Invoice` si
-			LEFT JOIN `tabCustomer` c
-				ON c.name = si.customer
 			LEFT JOIN `tabAddress` address_customer
 				ON address_customer.name = si.customer_address
-			LEFT JOIN `tabAddress` address_company 
+			LEFT JOIN `tabAddress` address_company
 				ON address_company.name = si.company_address
 			WHERE
-				si.company = %(company)s AND posting_date BETWEEN %(from_date)s AND %(to_date)s
+				si.company = %(company)s AND si.posting_date BETWEEN %(from_date)s AND %(to_date)s
 				AND si.docstatus = 1 AND si.is_return = 0
-				AND exists(
-					SELECT tax.name from `tabSales Taxes and Charges` tax
+				AND EXISTS (
+					SELECT tax.name FROM `tabSales Taxes and Charges` tax
 					WHERE
 						tax.parent = si.name
-						AND tax.account_head IN({0})
+						AND tax.parenttype = 'Sales Invoice'
+						AND tax.account_head IN %(tax_accounts)s
 						AND tax.base_tax_amount_after_discount_amount != 0)
-				{1}
-			""".format(",".join([frappe.db.escape(x) for x in self.filters.tax_accounts]), condition),
-			self.filters, as_dict=1)
+				{condition}
+			""".format(condition=condition), self.filters, as_dict=1)
 
 		self.invoices_map = {}
 		for invoice in invoices:
+			invoice.posting_date = formatdate(invoice.posting_date, "dd/mm/yyyy")
 			invoice.registration_no = invoice.tax_ntn or invoice.tax_nic
 			invoice.buyer_type = "Registered" if invoice.tax_strn else "Unregistered"
 			# fixed values
@@ -88,10 +86,10 @@ class FBRSalesTaxReport:
 
 		if invoice_names:
 			invoice_items = frappe.db.sql("""
-				SELECT parent as invoice, qty as item_quantity
+				SELECT parent AS invoice, qty AS item_quantity
 				FROM `tabSales Invoice Item`
-				WHERE parent in %s
-			""", [invoice_names], as_dict=1)
+				WHERE parent IN %(invoice_names)s AND parenttype = 'Sales Invoice'
+			""", {"invoice_names": tuple(invoice_names)}, as_dict=1)
 
 			for item in invoice_items:
 				invoice = self.invoices_map.get(item.invoice)
@@ -99,11 +97,11 @@ class FBRSalesTaxReport:
 					invoice['items'].append(item)
 
 			invoice_taxes = frappe.db.sql("""
-				SELECT parent as invoice, rate, account_head,
-					base_tax_amount_after_discount_amount as tax_amount
+				SELECT parent AS invoice, rate, account_head,
+					base_tax_amount_after_discount_amount AS tax_amount
 				FROM `tabSales Taxes and Charges`
-				WHERE parent in %s
-			""", [invoice_names], as_dict=1)
+				WHERE parent IN %(invoice_names)s AND parenttype = 'Sales Invoice'
+			""", {"invoice_names": tuple(invoice_names)}, as_dict=1)
 
 			for tax in invoice_taxes:
 				invoice = self.invoices_map.get(tax.invoice)
@@ -193,7 +191,7 @@ class FBRSalesTaxReport:
 			{
 				"label": _("HS Code Description"),
 				"fieldname": "hs_code_description",
-				"fieldtype": "Date",
+				"fieldtype": "Data",
 				"width": 130,
 				"hide_for_export": 1
 			},

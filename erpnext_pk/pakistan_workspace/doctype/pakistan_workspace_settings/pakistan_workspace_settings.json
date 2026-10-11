@@ -5,19 +5,33 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
-  "test"
+  "test",
+  "input_tax_section",
+  "input_tax_accounts"
  ],
  "fields": [
   {
    "fieldname": "test",
    "fieldtype": "Data",
    "label": "Test"
+  },
+  {
+   "fieldname": "input_tax_section",
+   "fieldtype": "Section Break",
+   "label": "Input Tax"
+  },
+  {
+   "fieldname": "input_tax_accounts",
+   "fieldtype": "Table",
+   "label": "Input Sales Tax Accounts",
+   "options": "Input Tax Account",
+   "description": "Purchase tax accounts that hold claimable input sales tax. Advance income tax and withholding accounts must not be listed. If empty, the Sales Tax Account of the company is used."
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2022-09-28 21:34:45.407791",
+ "modified": "2026-10-11 18:10:00.000000",
  "modified_by": "Administrator",
  "module": "Pakistan Workspace",
  "name": "Pakistan Workspace Settings",

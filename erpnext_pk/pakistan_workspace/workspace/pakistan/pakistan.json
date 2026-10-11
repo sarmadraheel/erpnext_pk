@@ -1,89 +1,81 @@
 {
- "cards_label": "",
- "category": "Modules",
+ "app": "erpnext_pk",
  "charts": [],
+ "content": "[{\"id\": \"pkonb00001\", \"type\": \"onboarding\", \"data\": {\"onboarding_name\": \"Pakistan\", \"col\": 12}}, {\"id\": \"pkhdr00001\", \"type\": \"header\", \"data\": {\"text\": \"\\u003cspan class=\\\"h4\\\"\\u003e\\u003cb\\u003eFBR Reports\\u003c/b\\u003e\\u003c/span\\u003e\", \"col\": 12}}, {\"id\": \"pkrep00000\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Domestic Sales Invoices (Annexure C)\", \"col\": 4}}, {\"id\": \"pkrep00001\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Sindh Sales Tax on Services\", \"col\": 4}}, {\"id\": \"pkhdr00003\", \"type\": \"header\", \"data\": {\"text\": \"\\u003cspan class=\\\"h4\\\"\\u003e\\u003cb\\u003eInput Tax\\u003c/b\\u003e\\u003c/span\\u003e\", \"col\": 12}}, {\"id\": \"pkitc00000\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Input Tax Claim\", \"col\": 4}}, {\"id\": \"pkhdr00002\", \"type\": \"header\", \"data\": {\"text\": \"\\u003cspan class=\\\"h4\\\"\\u003e\\u003cb\\u003eSettings\\u003c/b\\u003e\\u003c/span\\u003e\", \"col\": 12}}, {\"id\": \"pkset00000\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Company\", \"col\": 4}}, {\"id\": \"pkset00001\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Sales Taxes and Charges Template\", \"col\": 4}}, {\"id\": \"pkset00002\", \"type\": \"shortcut\", \"data\": {\"shortcut_name\": \"Item Tax Template\", \"col\": 4}}]",
  "creation": "2022-09-05 18:04:01.364741",
- "developer_mode_only": 0,
- "disable_user_customization": 0,
+ "custom_blocks": [],
  "docstatus": 0,
  "doctype": "Workspace",
- "extends_another_page": 0,
+ "for_user": "",
  "hide_custom": 0,
- "icon": "erpnext-pk",
+ "icon": "receipt-text",
  "idx": 0,
- "is_default": 0,
- "is_standard": 1,
+ "indicator_color": "",
+ "is_hidden": 0,
  "label": "Pakistan",
- "links": [
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "FBR Reports",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 1,
-   "label": "Domestic Sales Invoices (Annexure C)",
-   "link_to": "Domestic Sales Invoices (Annexure C) Report",
-   "link_type": "Report",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 1,
-   "label": "Sindh Sales Tax on Services",
-   "link_to": "Sindh Sales Tax on Services Report",
-   "link_type": "Report",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Settings",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Card Break"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Company Master",
-   "link_to": "Company",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Sales Taxes and Charges Template",
-   "link_to": "Sales Taxes and Charges Template",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  },
-  {
-   "hidden": 0,
-   "is_query_report": 0,
-   "label": "Item Tax Template",
-   "link_to": "Item Tax Template",
-   "link_type": "DocType",
-   "onboard": 0,
-   "type": "Link"
-  }
- ],
- "modified": "2022-10-03 16:03:54.601198",
+ "links": [],
+ "modified": "2026-10-11 18:15:00.000000",
  "modified_by": "Administrator",
  "module": "Pakistan Workspace",
+ "module_onboarding": "Pakistan",
  "name": "Pakistan",
- "onboarding": "Pakistan",
+ "number_cards": [],
  "owner": "Administrator",
- "pin_to_bottom": 0,
- "pin_to_top": 0,
- "shortcuts": []
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [],
+ "restrict_to_domain": "",
+ "roles": [
+  {
+   "role": "Accounts User"
+  },
+  {
+   "role": "Accounts Manager"
+  },
+  {
+   "role": "System Manager"
+  }
+ ],
+ "sequence_id": 100.0,
+ "shortcuts": [
+  {
+   "label": "Domestic Sales Invoices (Annexure C)",
+   "link_to": "Domestic Sales Invoices (Annexure C) Report",
+   "report_ref_doctype": "Sales Invoice",
+   "type": "Report"
+  },
+  {
+   "label": "Sindh Sales Tax on Services",
+   "link_to": "Sindh Sales Tax on Services Report",
+   "report_ref_doctype": "Sales Invoice",
+   "type": "Report"
+  },
+  {
+   "doc_view": "List",
+   "label": "Input Tax Claim",
+   "link_to": "Input Tax Claim",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "List",
+   "label": "Company",
+   "link_to": "Company",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "List",
+   "label": "Sales Taxes and Charges Template",
+   "link_to": "Sales Taxes and Charges Template",
+   "type": "DocType"
+  },
+  {
+   "doc_view": "List",
+   "label": "Item Tax Template",
+   "link_to": "Item Tax Template",
+   "type": "DocType"
+  }
+ ],
+ "standard": 1,
+ "title": "Pakistan",
+ "type": "Workspace"
 }

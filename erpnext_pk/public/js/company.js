@@ -12,9 +12,6 @@ frappe.ui.form.on('Company', {
 		frm.set_query("service_tax_account", function(){
 			return {filters: {"account_type": "Tax", "is_group": 0, "company": frm.doc.name}}
 		});
-		frm.set_query("advance_tax_account", function(){
-			return {filters: {"account_type": "Tax", "is_group": 0, "company": frm.doc.name}}
-		});
 	},
 	validate: function(frm) {
 		erpnext_pk.format_ntn(frm, 'tax_ntn');

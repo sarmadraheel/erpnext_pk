@@ -1,0 +1,19 @@
+{
+ "app": "erpnext_pk",
+ "creation": "2026-10-11 18:15:00.000000",
+ "docstatus": 0,
+ "doctype": "Desktop Icon",
+ "hidden": 0,
+ "icon_type": "App",
+ "idx": 0,
+ "label": "Pakistan Workspace",
+ "link": "/desk/pakistan",
+ "link_type": "External",
+ "logo_url": "/assets/erpnext_pk/images/erpnext-pk-logo.svg",
+ "modified": "2026-10-11 18:15:00.000000",
+ "modified_by": "Administrator",
+ "name": "Pakistan Workspace",
+ "owner": "Administrator",
+ "roles": [],
+ "standard": 1
+}

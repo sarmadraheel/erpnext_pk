@@ -3,8 +3,8 @@ from frappe import _
 
 
 sales_tax_account_name = "Sales Tax on Goods"
-sales_tax_description = "Sales Tax @ 17%"
-sales_tax_rate = 17.0
+# Fallback only: the rate and description are taken from the sales tax account when it has a tax rate
+sales_tax_rate = 18.0
 
 further_tax_account_name = "Further Tax"
 further_tax_description = "Further Tax @ 3%"
@@ -123,16 +123,24 @@ def rename_pakistan_tax_template(company):
 		frappe.get_doc("Sales Taxes and Charges Template", new_name).save()
 
 
+def get_sales_tax_rate(account):
+	return frappe.db.get_value("Account", account, "tax_rate") or sales_tax_rate
+
+
+def get_sales_tax_description(rate):
+	return "Sales Tax @ {0:g}%".format(rate)
+
+
 def update_sales_tax_description():
 	# Change GST % 17.0 Description
 	sales_tax_template_rows = frappe.get_all("Sales Taxes and Charges",
 		filters={'description': "GST @ 17.0", "parenttype": "Sales Taxes and Charges Template"})
 
 	if sales_tax_template_rows:
-		print('Changing "GST @ 17.0" Description to "{0}"'.format(sales_tax_description))
+		print('Changing "GST @ 17.0" Description to "{0}"'.format(get_sales_tax_description(17.0)))
 
 	for d in sales_tax_template_rows:
-		frappe.db.set_value("Sales Taxes and Charges", d.name, "description", sales_tax_description)
+		frappe.db.set_value("Sales Taxes and Charges", d.name, "description", get_sales_tax_description(17.0))
 
 
 def create_further_tax_accounts_for_pakistan():
@@ -182,8 +190,9 @@ def create_tax_templates(company):
 			sales_tax_row = template.append('taxes')
 			sales_tax_row.charge_type = "On Net Total"
 			sales_tax_row.account_head = sales_tax_account
-			sales_tax_row.description = sales_tax_description
-			sales_tax_row.rate = sales_tax_rate
+			rate = get_sales_tax_rate(sales_tax_account)
+			sales_tax_row.description = get_sales_tax_description(rate)
+			sales_tax_row.rate = rate
 
 			further_tax_row = template.append('taxes')
 			further_tax_row.charge_type = "On Net Total"

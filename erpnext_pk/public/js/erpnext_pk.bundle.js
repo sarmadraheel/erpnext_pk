@@ -5,6 +5,11 @@ $.extend(erpnext_pk, {
 		value = cstr(value).toUpperCase();
 		value = value.replace(/[^a-zA-Z0-9]+/g, "");
 
+		// Individuals use their 13 digit CNIC as the NTN: 00000-0000000-0
+		if (/^[0-9]{13}$/.test(value)) {
+			return value.slice(0, 5) + "-" + value.slice(5, 12) + "-" + value.slice(12);
+		}
+
 		//0000000-0
 		if (value.length >= 7) {
 			value = value.slice(0, 7) + "-" + value.slice(7);
